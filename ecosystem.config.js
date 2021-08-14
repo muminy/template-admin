@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "next-site",
-      cwd: " /home/your-name/my-nextjs-project",
+      cwd: "./",
       script: "npm",
       args: "start",
       env: {},
