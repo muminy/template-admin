@@ -1,3 +1,4 @@
+import { appointments } from "@db/appointments";
 import { services } from "@db/services";
 import Layout from "components/core/layout";
 import ItemAction from "components/ui/content/item_action";
@@ -7,6 +8,7 @@ import Flexible from "components/ui/Flex";
 import AddServiceGroups from "components/ui/forms/addServiceGroups";
 import CustomModal from "components/ui/modal";
 import TableRows from "components/ui/table";
+import { designAppointments } from "components/ui/table/design/appointments";
 import { designServiceGroups } from "components/ui/table/design/serviceGroups";
 import { designServices } from "components/ui/table/design/services";
 import { Fragment, useState } from "react";
@@ -18,14 +20,6 @@ export default function ServiceGroups() {
   const toggleModal = () => setActiveModal(!activeModal);
 
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, error } = getServiceGroups({ offset: pageIndex, search });
-
-  if (error || (data && data.error))
-    return (
-      <div className="bg-red-100 text-red-800 rounded-xl w-full flex items-center justify-center">
-        failed to load
-      </div>
-    );
 
   return (
     <Layout
@@ -36,7 +30,7 @@ export default function ServiceGroups() {
           <ItemAction title="Randevu silindi" type="danger" />
           <ItemAction title="Randevu oluşturuldu" type="success" />
           <StatsTitle className="mt-10" title="Genel İstatistikler" />
-          <StatsCard title="Toplam Hizmet Grubu" stats={data?.count} />
+          <StatsCard title="Toplam Hizmet Grubu" stats={3} />
         </Fragment>
       )}
     >
@@ -57,9 +51,9 @@ export default function ServiceGroups() {
       <TableRows
         getPageIndex={(item) => setPageIndex(item + 1)}
         initialPage={pageIndex - 1}
-        patterns={designServiceGroups}
-        data={data}
-        loading={!data && !error}
+        patterns={designAppointments}
+        count={appointments.length}
+        data={appointments}
       />
       <CustomModal
         setModal={toggleModal}

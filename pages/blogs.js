@@ -1,9 +1,11 @@
+import { appointments } from "@db/appointments";
 import { services } from "@db/services";
 import Layout from "components/core/layout";
 import Flexible from "components/ui/Flex";
 import AddBlog from "components/ui/forms/addBlog";
 import CustomModal from "components/ui/modal";
 import TableRows from "components/ui/table";
+import { designAppointments } from "components/ui/table/design/appointments";
 import { designBlog } from "components/ui/table/design/blog";
 import { designServices } from "components/ui/table/design/services";
 import { useState } from "react";
@@ -14,16 +16,7 @@ export default function Blog() {
   const [pageIndex, setPageIndex] = useState(1);
   const [search, setSearch] = useState("");
 
-  const { data, error } = getBlogs({ offset: pageIndex, search });
-
   const toggleModal = () => setActiveModal(!activeModal);
-
-  if (error || (data && data.error))
-    return (
-      <div className="bg-red-100 text-red-800 rounded-xl w-full flex items-center justify-center">
-        failed to load
-      </div>
-    );
 
   return (
     <Layout>
@@ -43,10 +36,10 @@ export default function Blog() {
       </Flexible>
       <TableRows
         getPageIndex={(item) => setPageIndex(item + 1)}
-        data={data}
+        data={appointments}
         initialPage={pageIndex - 1}
-        patterns={designBlog}
-        loading={!data && !error}
+        count={appointments.length}
+        patterns={designAppointments}
       />
       <CustomModal
         setModal={toggleModal}

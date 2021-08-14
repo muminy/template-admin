@@ -7,19 +7,11 @@ import { getAppointments } from "services/appointments";
 import StatsTitle from "components/ui/content/stats_title";
 import ItemAction from "components/ui/content/item_action";
 import StatsCard from "components/ui/content/stats_card";
+import { appointments } from "@db/appointments";
 
 export default function Appointments() {
   const [pageIndex, setPageIndex] = useState(1);
   const [search, setSearch] = useState("");
-
-  const { data, error } = getAppointments({ offset: pageIndex, search });
-
-  if (error || (data && data.error))
-    return (
-      <div className="bg-red-100 text-red-800 rounded-xl w-full flex items-center justify-center">
-        failed to load
-      </div>
-    );
 
   return (
     <Layout
@@ -30,8 +22,8 @@ export default function Appointments() {
           <ItemAction title="Randevu silindi" type="danger" />
           <ItemAction title="Randevu oluşturuldu" type="success" />
           <StatsTitle className="mt-10" title="Genel İstatistikler" />
-          <StatsCard title="Bugün Toplam Randevu" stats={data?.today} />
-          <StatsCard title="Toplam Randevu" stats={data?.count} />
+          <StatsCard title="Bugün Toplam Randevu" stats={12} />
+          <StatsCard title="Toplam Randevu" stats={23} />
         </Fragment>
       )}
     >
@@ -45,9 +37,9 @@ export default function Appointments() {
       </Flexible>
       <TableRows
         getPageIndex={(item) => setPageIndex(item + 1)}
-        data={data}
+        data={appointments}
+        count={appointments.length}
         initialPage={pageIndex - 1}
-        loading={!data && !error}
         patterns={designAppointments}
       />
     </Layout>

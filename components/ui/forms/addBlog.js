@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useLoadData, useSetData } from "../editor";
 import LoadingComponent from "../form-elements/loading";
 import initialData from "components/ui/editor/data.json";
+import { LabelOfUpload } from "../form-elements/fileUpload";
 
 const Editor = dynamic(
   () => import("components/ui/editor/editor").then((mod) => mod.EditorContainer),
@@ -20,7 +21,7 @@ export default function AddBlog({ editable }) {
   const [success, setSuccess] = useState(false);
   const { handleSubmit, register } = useForm();
 
-  useSetData(editor, editable ? JSON.parse(editable?.blog_content) : initialData);
+  // useSetData(editor, editable ? JSON.parse(editable?.blog_content) : initialData);
 
   const handleBlog = async (blog_items) => {
     setLoading(true);
@@ -71,8 +72,7 @@ export default function AddBlog({ editable }) {
               defaultValue={editable?.blog_title}
               innerRef={register("blog_title", { required: true })}
               label="Blog başlığı"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
+              placeholder="Bursa, Ankara.."
             />
           </GridSpan>
           <GridSpan span="col-span-12">
@@ -81,28 +81,20 @@ export default function AddBlog({ editable }) {
               defaultValue={editable?.blog_short_desc}
               innerRef={register("blog_short_desc", { required: true })}
               tag="textarea"
-              label="Blog kısa içerik"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
+              label="Blog kısa Açıklama"
+              placeholder="Blog kısa içerik..."
             />
           </GridSpan>
           <GridSpan span="col-span-12 relative">
-            <div className="border-t rounded-sm w-full px-4 py-2">
-              <Editor reInit editorRef={setEditor} />
-
-              <div className="absolute text-gray-600 ml-[-8px] top-[-8px] px-2 text-sm font-semibold bg-white">
-                Blog içeriği
+            <div className="rounded-sm w-full">
+              <div className="font-bold mb-2">Blog İçeriği</div>
+              <div className="border-2 border-dashed px-4 py-2 rounded-md focus:border-gray-300 border-gray-200">
+                <Editor placeholder="Blog içeriği giriniz" reInit editorRef={setEditor} />
               </div>
             </div>
           </GridSpan>
           <GridSpan span="col-span-12">
-            <label
-              className="bg-blue-50 border border-blue-200 rounded-md w-full block text-center py-6
-              "
-              htmlFor="bg_image"
-            >
-              {editable ? "Yeni resim seç" : "Resim seç"}
-            </label>
+            <LabelOfUpload />
             <input
               className="hidden"
               name="blog_image"

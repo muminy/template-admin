@@ -60,7 +60,6 @@ export default function AddSiteConfig({ editable }) {
               tag="textarea"
               innerRef={register("site_vision", { required: true })}
               label="Visyon"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Visyonumuz..."
             />
           </GridSpan>
@@ -71,7 +70,6 @@ export default function AddSiteConfig({ editable }) {
               tag="textarea"
               innerRef={register("site_mission", { required: true })}
               label="Misyon"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Misyonumuz.."
             />
           </GridSpan>
@@ -82,7 +80,6 @@ export default function AddSiteConfig({ editable }) {
               tag="textarea"
               innerRef={register("site_about_us", { required: true })}
               label="Hakkımızda"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Hakkımızda.."
             />
           </GridSpan>
@@ -99,7 +96,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_address"
               innerRef={register("site_address", { required: true })}
               label="Adres"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Kocaleli.."
             />
           </GridSpan>
@@ -109,7 +105,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_mail"
               innerRef={register("site_mail", { required: true })}
               label="Mail Adresi"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="info@.."
             />
           </GridSpan>
@@ -119,7 +114,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_call_phone"
               innerRef={register("site_call_phone", { required: true })}
               label="İletişim Numara"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="+90530..."
             />
           </GridSpan>
@@ -129,7 +123,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_wp_phone"
               innerRef={register("site_wp_phone", { required: true })}
               label="Whatsapp iletişim"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="+90530..."
             />
           </GridSpan>
@@ -146,7 +139,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_facebook"
               innerRef={register("site_facebook", { required: true })}
               label="Facebook"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="fb.com/username"
             />
           </GridSpan>
@@ -156,7 +148,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_youtube"
               innerRef={register("site_youtube", { required: true })}
               label="Youtube"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="channel/username.."
             />
           </GridSpan>
@@ -166,7 +157,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_instagram"
               innerRef={register("site_instagram", { required: true })}
               label="İnstagram"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="IG.com/username"
             />
           </GridSpan>
@@ -183,7 +173,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_admin_username"
               innerRef={register("site_admin_username", { required: true })}
               label="Admin Kullanıcı adı"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="username"
             />
           </GridSpan>
@@ -193,7 +182,6 @@ export default function AddSiteConfig({ editable }) {
               name="site_admin_password"
               innerRef={register("site_admin_password", { required: true })}
               label="Admin şifre"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="****"
               type="password"
             />

@@ -9,6 +9,8 @@ import CustomLabel from "../form-elements/label";
 import initialData from "components/ui/editor/data.json";
 import { useLoadData, useSetData } from "../editor";
 import LoadingComponent from "../form-elements/loading";
+import { Select } from "../form-elements/select";
+import { LabelOfUpload } from "../form-elements/fileUpload";
 
 const Editor = dynamic(
   () => import("components/ui/editor/editor").then((mod) => mod.EditorContainer),
@@ -25,6 +27,11 @@ export default function AddServices({ editable }) {
     editable ? JSON.parse(editable.service_faq) : [{ question: "", answer: "" }]
   );
 
+  const branch_lists = [
+    { id: "1", value: "Kocaeli" },
+    { id: "2", value: "İstanbul" },
+  ];
+
   const { handleSubmit, register } = useForm();
 
   useSetData(editor, editable ? JSON.parse(editable?.service_content) : initialData);
@@ -36,7 +43,7 @@ export default function AddServices({ editable }) {
   };
 
   useEffect(() => {
-    handleGetBranch();
+    // handleGetBranch();
   }, []);
 
   const handleService = async (services) => {
@@ -119,7 +126,6 @@ export default function AddServices({ editable }) {
               defaultValue={editable?.service_name}
               innerRef={register("service_name", { required: true })}
               label="Hizmet Başlığı"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Bursa şubesi"
             />
           </GridSpan>
@@ -130,53 +136,26 @@ export default function AddServices({ editable }) {
               defaultValue={editable?.service_short_desc}
               innerRef={register("service_short_desc", { required: true })}
               label="Hizmet Kısa Açıklama"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Bursa şubesi"
             />
           </GridSpan>
-          <GridSpan span="col-span-12 relative">
-            <div className="border-t rounded-sm w-full px-4 py-2">
-              <Editor reInit editorRef={setEditor} />
 
-              <div className="absolute text-gray-600 ml-[-8px] top-[-8px] px-2 text-sm font-semibold bg-white">
-                Hizmet içeriği
+          <GridSpan span="col-span-12">
+            <div className="font-bold mb-2">Hizmet Şubesi</div>
+            <Select options={branch_lists} />
+          </GridSpan>
+
+          <GridSpan span="col-span-12 relative">
+            <div className="rounded-sm w-full">
+              <div className="font-bold mb-2">Hizmet İçeriği</div>
+              <div className="border-2 px-4 py-2 rounded-md focus:border-gray-300 border-dashed border-gray-200">
+                <Editor placeholder="Blog içeriği giriniz" reInit editorRef={setEditor} />
               </div>
             </div>
           </GridSpan>
-        </GridCol>
-      </div>
-      <div className="block xl:flex lg:flex mb-10">
-        <div className="w-1/5 font-black tracking-wide uppercase text-gray-600 mb-8 xl:mb-0 lg:mb-0">
-          Hizmet Yapısı
-        </div>
-        <GridCol cols="grid-cols-12" className="w-full xl:w-4/5 lg:w-4/5 gap-10">
+
           <GridSpan span="col-span-12">
-            {mounted && (
-              <div className="pt-2 relative">
-                <select
-                  {...register("service_group_id", { required: true })}
-                  defaultValue={editable ? editable?.service_group_id : ""}
-                  className="border rounded-sm w-full px-4 py-3"
-                >
-                  <option value="">Seçiniz</option>
-                  {groups.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.service_group_name}
-                    </option>
-                  ))}
-                </select>
-                <CustomLabel label="Hizmet grubu" />
-              </div>
-            )}
-          </GridSpan>
-          <GridSpan span="col-span-12">
-            <label
-              className="bg-blue-50 border border-blue-200 rounded-md w-full block text-center py-6
-              "
-              htmlFor="bg_image"
-            >
-              {editable ? "Yeni resim seç" : "Resim seç"}
-            </label>
+            <LabelOfUpload />
             <input
               className="hidden"
               name="service_image"
@@ -193,6 +172,7 @@ export default function AddServices({ editable }) {
           </GridSpan>
         </GridCol>
       </div>
+
       <div className="block xl:flex lg:flex mb-10">
         <div className="w-1/5 font-black tracking-wide uppercase text-gray-600 mb-8 xl:mb-0 lg:mb-0">
           Hizmet Faq

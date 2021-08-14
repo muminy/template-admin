@@ -60,16 +60,14 @@ export default function addBranch({ editable }) {
               name="branch_name"
               innerRef={register("branch_name", { required: true })}
               label="Şube İsmi"
-              className="border rounded-sm w-full px-4 py-3 mb-4 xl:mb-0 lg:mb-0"
               placeholder="Bursa şubesi"
             />
           </GridSpan>
           <GridSpan span="col-span-12 relative">
-            <div className="border-t rounded-sm w-full px-4 py-2">
-              <Editor reInit editorRef={setEditor} />
-
-              <div className="absolute text-gray-600 ml-[-8px] top-[-8px] px-2 text-sm font-semibold bg-white">
-                Şube içeriği
+            <div className="rounded-sm w-full">
+              <div className="font-bold mb-2">Şube İçeriği</div>
+              <div className="border-2 border-dashed px-4 py-2 rounded-md focus:border-gray-300 border-gray-200">
+                <Editor placeholder="Blog içeriği giriniz" reInit editorRef={setEditor} />
               </div>
             </div>
           </GridSpan>
@@ -86,7 +84,6 @@ export default function addBranch({ editable }) {
               defaultValue={editable?.branch_adress}
               innerRef={register("branch_adress", { required: true })}
               label="Adress"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="İstanbu/Kadıköy ..."
             />
           </GridSpan>
@@ -96,7 +93,6 @@ export default function addBranch({ editable }) {
               defaultValue={editable?.branch_mail}
               innerRef={register("branch_mail", { required: true })}
               label="Mail"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="info@ex.com"
             />
           </GridSpan>
@@ -106,7 +102,6 @@ export default function addBranch({ editable }) {
               defaultValue={editable?.branch_phone}
               innerRef={register("branch_phone", { required: true })}
               label="Telefon"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="+9 0555 555 55 55"
             />
           </GridSpan>

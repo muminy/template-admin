@@ -5,12 +5,19 @@ import CustomLabel from "../form-elements/label";
 import { useForm } from "react-hook-form";
 import { GridCol, GridSpan } from "../GridArea";
 import LoadingComponent from "../form-elements/loading";
+import { Select } from "../form-elements/select";
+import { LabelOfUpload } from "../form-elements/fileUpload";
 
 export default function AddServiceGroups({ editable }) {
   const [branchLists, setBrachLists] = useState([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const branch_lists = [
+    { id: "1", value: "Kocaeli" },
+    { id: "2", value: "İstanbul" },
+  ];
 
   const { handleSubmit, register } = useForm();
 
@@ -21,7 +28,7 @@ export default function AddServiceGroups({ editable }) {
   };
 
   useEffect(() => {
-    handleGetBranch();
+    // handleGetBranch();
   }, []);
 
   const handleServiceGroups = async (services) => {
@@ -63,67 +70,35 @@ export default function AddServiceGroups({ editable }) {
     <form onSubmit={handleSubmit(handleServiceGroups)} className="overflow-y-auto px-10">
       {loading && <LoadingComponent success={success} editable={editable !== undefined} />}
       <div className="block xl:flex lg:flex mb-10">
-        <div className="w-1/5 font-black tracking-wide uppercase text-gray-600 mb-8 xl:mb-0 lg:mb-0">
-          Hizmet İçeriği
-        </div>
-        <GridCol cols="grid-cols-12" className="w-full xl:w-4/5 lg:w-4/5 gap-10">
+        <GridCol cols="grid-cols-12" className="w-full gap-10">
           <GridSpan span="col-span-12">
             <CustomInput
               name="service_group_name"
               defaultValue={editable?.service_group_name}
               innerRef={register("service_group_name", { required: true })}
               label="Hizmet Başlığı"
-              className="border rounded-sm w-full px-4 py-3"
               placeholder="Bursa şubesi"
             />
           </GridSpan>
           <GridSpan span="col-span-6">
             <div className="pt-2 relative">
-              <select
-                name="service_group_gender"
-                {...register("service_group_gender", { required: true })}
-                defaultValue={editable?.service_group_gender}
-                className="border rounded-sm w-full px-4 py-3"
-              >
-                <option disabled value="">
-                  Seçiniz
-                </option>
-                <option value="1">Erkek</option>
-                <option value="2">Kadın</option>
-              </select>
-              <CustomLabel label="Cinsiyet" />
+              <div className="font-bold mb-2">Cinsiyet</div>
+              <Select
+                options={[
+                  { id: "1", value: "Erkek" },
+                  { value: "Kadın", id: "2" },
+                ]}
+              />
             </div>
           </GridSpan>
           <GridSpan span="col-span-6">
-            {mounted && (
-              <div className="pt-2 relative">
-                <select
-                  name="service_group_branch"
-                  {...register("service_group_branch", { required: true })}
-                  defaultValue={editable ? editable.service_group_branch : ""}
-                  className="border rounded-sm w-full px-4 py-3"
-                >
-                  <option disabled value="">
-                    Seçiniz
-                  </option>
-                  {branchLists.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.branch_name}
-                    </option>
-                  ))}
-                </select>
-                <CustomLabel label="Hizmet Şubesi" />
-              </div>
-            )}
+            <div className="pt-2 relative">
+              <div className="font-bold mb-2">Hizmet Şubesi</div>
+              <Select options={branch_lists} />
+            </div>
           </GridSpan>
           <GridSpan span="col-span-12">
-            <label
-              className="bg-blue-50 border border-blue-200 rounded-md w-full block text-center py-6
-              "
-              htmlFor="bg_image"
-            >
-              {editable ? "Yeni resim seç" : "Resim seç"}
-            </label>
+            <LabelOfUpload />
             <input
               className="hidden"
               name="service_image"

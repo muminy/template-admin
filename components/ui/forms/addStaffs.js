@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { baseURL, postFetcher } from "services/swr";
 import CustomLabel from "../form-elements/label";
 import LoadingComponent from "../form-elements/loading";
+import { LabelOfUpload } from "../form-elements/fileUpload";
 
 const Editor = dynamic(
   () => import("components/ui/editor/editor").then((mod) => mod.EditorContainer),
@@ -61,126 +62,84 @@ export default function AddStaffs({ editable }) {
   }, [success]);
 
   useEffect(() => {
-    handleGetBranch();
+    // handleGetBranch();
   }, []);
 
   return (
     <form onSubmit={handleSubmit(handleStaff)} className="px-10">
       {loading && <LoadingComponent success={success} editable={editable !== undefined} />}
-      <div className="block xl:flex lg:flex mb-10">
-        <div className="w-1/5 font-black tracking-wide uppercase text-gray-600 mb-8 xl:mb-0 lg:mb-0">
-          Personel Genel Bilgi
-        </div>
-        <GridCol cols="grid-cols-12" className="w-full xl:w-4/5 lg:w-4/5 gap-5">
-          <GridSpan span="col-span-6">
-            <CustomInput
-              name="staff_name"
-              defaultValue={editable?.staff_name}
-              innerRef={register("staff_name", { required: true })}
-              label="Personel Adı"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
+
+      <GridCol cols="grid-cols-12" className="gap-5">
+        <GridSpan span="col-span-6">
+          <CustomInput
+            name="staff_name"
+            defaultValue={editable?.staff_name}
+            innerRef={register("staff_name", { required: true })}
+            label="Personel Adı"
+            placeholder="Bursa şubesi"
+          />
+        </GridSpan>
+        <GridSpan span="col-span-6">
+          <CustomInput
+            name="staff_bio"
+            defaultValue={editable?.staff_bio}
+            innerRef={register("staff_bio", { required: true })}
+            label="Personel bio"
+            placeholder="Bursa şubesi"
+          />
+        </GridSpan>
+        <GridSpan span="col-span-12">
+          <LabelOfUpload />
+          <input
+            className="hidden"
+            name="staff_image"
+            {...register("staff_image", { required: editable ? false : true })}
+            id="bg_image"
+            type="file"
+          />
+          {editable && editable.staff_image_url && (
+            <img
+              src={`${baseURL}/${editable.staff_image_url}`}
+              className="w-full rounded-xl object-cover h-[200px] mt-2 shadow-md"
             />
-          </GridSpan>
-          <GridSpan span="col-span-6">
-            <CustomInput
-              name="staff_bio"
-              defaultValue={editable?.staff_bio}
-              innerRef={register("staff_bio", { required: true })}
-              label="Personel bio"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
-            />
-          </GridSpan>
-          <GridSpan span="col-span-6">
-            {mounted && (
-              <div className="pt-2 relative">
-                <select
-                  name="staff_type_id"
-                  {...register("staff_type_id", { required: true })}
-                  defaultValue={editable ? editable?.staff_type_id : ""}
-                  className="border rounded-sm w-full px-4 py-3"
-                >
-                  <option value="">Seçiniz</option>
-                  {staffTypes.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.staff_type}
-                    </option>
-                  ))}
-                </select>
-                <CustomLabel label="Hizmet grubu" />
-              </div>
-            )}
-          </GridSpan>
-          <GridSpan span="col-span-12">
-            <label
-              className="bg-blue-50 border border-blue-200 rounded-md w-full block text-center py-6
-              "
-              htmlFor="bg_image"
-            >
-              {editable ? "Yeni resim seç" : "Resim seç"}
-            </label>
-            <input
-              className="hidden"
-              name="staff_image"
-              {...register("staff_image", { required: editable ? false : true })}
-              id="bg_image"
-              type="file"
-            />
-            {editable && editable.staff_image_url && (
-              <img
-                src={`${baseURL}/${editable.staff_image_url}`}
-                className="w-full rounded-xl object-cover h-[200px] mt-2 shadow-md"
-              />
-            )}
-          </GridSpan>
-        </GridCol>
-      </div>
-      <div className="block xl:flex lg:flex mb-10">
-        <div className="w-1/5 font-black tracking-wide uppercase text-gray-600 mb-8 xl:mb-0 lg:mb-0">
-          Personel Sosyal Medya
-        </div>
-        <GridCol cols="grid-cols-12" className="w-full xl:w-4/5 lg:w-4/5 gap-5">
-          <GridSpan span="col-span-6">
-            <CustomInput
-              name="staff_twitter"
-              defaultValue={editable?.staff_twitter}
-              innerRef={register("staff_twitter")}
-              label="Twitter"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
-            />
-          </GridSpan>
-          <GridSpan span="col-span-6">
-            <CustomInput
-              name="staff_facebook"
-              defaultValue={editable?.staff_facebook}
-              innerRef={register("staff_facebook")}
-              label="Facebook"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
-            />
-          </GridSpan>
-          <GridSpan span="col-span-6">
-            <CustomInput
-              name="staff_instagram"
-              defaultValue={editable?.staff_instagram}
-              innerRef={register("staff_instagram")}
-              label="Instagram"
-              className="border rounded-sm w-full px-4 py-3"
-              placeholder="Bursa şubesi"
-            />
-          </GridSpan>
-          <GridSpan span="col-span-12">
-            <button
-              className="px-4 py-2 bg-gray-900 hover:bg-opacity-90 text-white rounded-md"
-              type="submit"
-            >
-              {editable ? "Güncelle" : "Personel Ekle"}
-            </button>
-          </GridSpan>
-        </GridCol>
-      </div>
+          )}
+        </GridSpan>
+        <GridSpan span="col-span-6">
+          <CustomInput
+            name="staff_twitter"
+            defaultValue={editable?.staff_twitter}
+            innerRef={register("staff_twitter")}
+            label="Twitter"
+            placeholder="Bursa şubesi"
+          />
+        </GridSpan>
+        <GridSpan span="col-span-6">
+          <CustomInput
+            name="staff_facebook"
+            defaultValue={editable?.staff_facebook}
+            innerRef={register("staff_facebook")}
+            label="Facebook"
+            placeholder="Bursa şubesi"
+          />
+        </GridSpan>
+        <GridSpan span="col-span-6">
+          <CustomInput
+            name="staff_instagram"
+            defaultValue={editable?.staff_instagram}
+            innerRef={register("staff_instagram")}
+            label="Instagram"
+            placeholder="Bursa şubesi"
+          />
+        </GridSpan>
+        <GridSpan span="col-span-12">
+          <button
+            className="px-4 py-2 bg-gray-900 hover:bg-opacity-90 text-white rounded-md"
+            type="submit"
+          >
+            {editable ? "Güncelle" : "Personel Ekle"}
+          </button>
+        </GridSpan>
+      </GridCol>
     </form>
   );
 }

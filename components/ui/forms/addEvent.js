@@ -15,6 +15,7 @@ import moment from "moment";
 import initialData from "components/ui/editor/data.json";
 import "moment/locale/tr";
 import LoadingComponent from "../form-elements/loading";
+import { LabelOfUpload } from "../form-elements/fileUpload";
 
 const Editor = dynamic(
   () => import("components/ui/editor/editor").then((mod) => mod.EditorContainer),
@@ -102,36 +103,30 @@ export default function AddEvent({ editable }) {
           </GridSpan>
           <GridSpan span="col-span-12 mb-4">
             <div className="pt-2 relative">
+              <div className="font-bold mb-2">Bitiş Tarihi</div>
               <Datetime
                 locale={"tr"}
                 dateFormat="YYYY-MM-DD"
                 timeFormat=""
                 value={selectedDate}
                 inputProps={{
-                  className: "border rounded-sm w-full px-4 py-3",
+                  className: "custom-input",
+                  placeholder: "Bitiş tarihi seçin",
                 }}
                 onChange={(date) => setSelectedDate(moment(date).format("YYYY-MM-DD"))}
               />
-              <CustomLabel label="Bitiş Tarihi" />
             </div>
           </GridSpan>
           <GridSpan span="col-span-12 relative">
-            <div className="border-t rounded-sm w-full px-4 py-2">
-              <Editor reInit editorRef={setEditor} />
-
-              <div className="absolute text-gray-600 ml-[-8px] top-[-8px] px-2 text-sm font-semibold bg-white">
-                Etkinlik içeriği
+            <div className="rounded-sm w-full">
+              <div className="font-bold mb-2">Etkinlik İçeriği</div>
+              <div className="border-2 px-4 py-2 rounded-md focus:border-gray-300 border-dashed border-gray-200">
+                <Editor placeholder="Blog içeriği giriniz" reInit editorRef={setEditor} />
               </div>
             </div>
           </GridSpan>
           <GridSpan span="col-span-12">
-            <label
-              className="bg-blue-50 border border-blue-200 rounded-md w-full block text-center py-6
-              "
-              htmlFor="bg_image"
-            >
-              {editable ? "Yeni resim seç" : "Resim seç"}
-            </label>
+            <LabelOfUpload />
             <input
               className="hidden"
               name="event_image"

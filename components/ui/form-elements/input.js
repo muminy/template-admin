@@ -13,20 +13,16 @@ export default function CustomInput({
 }) {
   return (
     <div className="pt-2 relative">
+      {label && <div className="font-bold mb-2">{label}</div>}
       <Component
         {...innerRef}
         name={name}
         type={type}
         onChange={onChangeText}
         defaultValue={defaultValue}
-        className={classNames(className)}
+        className={classNames("custom-input", className)}
         placeholder={placeholder}
       />
-      {label && (
-        <div className="absolute text-gray-600 top-0 px-2 text-sm font-semibold bg-white ml-2">
-          {label}
-        </div>
-      )}
     </div>
   );
 }

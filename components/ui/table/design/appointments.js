@@ -30,8 +30,13 @@ export const designAppointments = [
     placeholder: "Tedavi",
   },
   {
-    row: "appointment_message",
+    row: "appointment_mail",
     minWidth: "130px",
-    placeholder: "Mesaj",
+    placeholder: "Mail",
+  },
+  {
+    row: "appointment_branch",
+    minWidth: "130px",
+    placeholder: "Şube",
   },
 ];

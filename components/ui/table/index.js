@@ -5,7 +5,7 @@ import style from "./style.module.css";
 //
 export default function TableRows({
   patterns,
-  rows,
+  count,
   data,
   getPageIndex,
   initialPage,
@@ -31,7 +31,7 @@ export default function TableRows({
           </thead>
           {!loading && (
             <tbody>
-              {data.rows.map((item_rows, index) => (
+              {data.map((item_rows, index) => (
                 <tr
                   key={index}
                   className="bg-[#f3f8ff] last:border-b-0 border-b-4  border-white border-space"
@@ -53,12 +53,12 @@ export default function TableRows({
           )}
         </table>
         {loading && <div className="bg-[#f3f8ff] py-4 w-full text-center">Data yükleniyor</div>}
-        {!loading && data.rows.length === 0 && (
+        {!loading && data.length === 0 && (
           <div className="bg-[#f3f8ff] py-4 w-full text-center">Data Yok</div>
         )}
       </div>
       {!loading && !disablePagination && (
-        <Pagination initialPage={initialPage} getPageIndex={getPageIndex} size={data.count / 10} />
+        <Pagination initialPage={initialPage} getPageIndex={getPageIndex} size={count / 10} />
       )}
     </div>
   );

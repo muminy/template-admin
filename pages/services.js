@@ -1,3 +1,4 @@
+import { appointments } from "@db/appointments";
 import { services } from "@db/services";
 import Layout from "components/core/layout";
 import ItemAction from "components/ui/content/item_action";
@@ -7,6 +8,7 @@ import Flexible from "components/ui/Flex";
 import AddServices from "components/ui/forms/addServices";
 import CustomModal from "components/ui/modal";
 import TableRows from "components/ui/table";
+import { designAppointments } from "components/ui/table/design/appointments";
 import { designServices } from "components/ui/table/design/services";
 import { Fragment, useState } from "react";
 import { getServices } from "services/services";
@@ -18,14 +20,6 @@ export default function Services() {
   const toggleModal = () => setActiveModal(!activeModal);
 
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, error } = getServices({ offset: pageIndex, search });
-
-  if (error || (data && data.error))
-    return (
-      <div className="bg-red-100 text-red-800 rounded-xl w-full flex items-center justify-center">
-        failed to load
-      </div>
-    );
 
   return (
     <Layout
@@ -36,7 +30,7 @@ export default function Services() {
           <ItemAction title="Randevu silindi" type="danger" />
           <ItemAction title="Randevu oluşturuldu" type="success" />
           <StatsTitle className="mt-10" title="Genel İstatistikler" />
-          <StatsCard title="Toplam Hizmet" stats={data?.count} />
+          <StatsCard title="Toplam Hizmet" stats={2} />
         </Fragment>
       )}
     >
@@ -57,9 +51,9 @@ export default function Services() {
       <TableRows
         getPageIndex={(item) => setPageIndex(item + 1)}
         initialPage={pageIndex - 1}
-        patterns={designServices}
-        data={data}
-        loading={!data && !error}
+        patterns={designAppointments}
+        count={appointments.length}
+        data={appointments}
       />
       <CustomModal setModal={toggleModal} activeModal={activeModal} moldalComponent={AddServices} />
     </Layout>

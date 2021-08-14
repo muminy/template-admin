@@ -12,7 +12,8 @@ export const useEditor = (
   toolsList,
   { data, editorRef },
   options = {},
-  holderName = "editor-js"
+  holderName = "editor-js",
+  placeholder
 ) => {
   const [editorInstance, setEditor] = useState(null);
   const { data: ignoreData, tools: ignoreTools, holder: ignoreHolder, ...editorOptions } = options;
@@ -41,6 +42,7 @@ export const useEditor = (
 
       // Override editor options
       ...editorOptions,
+      placeholder: placeholder,
     });
 
     setEditor(editor);
@@ -70,13 +72,15 @@ export const useEditor = (
   return { editor: editorInstance };
 };
 
-export const EditorContainer = memo(({ editorRef, children, data, options, holderName }) => {
-  useEditor(tools, { data, editorRef }, options, holderName);
+export const EditorContainer = memo(
+  ({ editorRef, children, data, options, holderName, placeholder }) => {
+    useEditor(tools, { data, editorRef }, options, holderName, placeholder);
 
-  return (
-    <React.Fragment>
-      {!children && <div id="editor-js"></div>}
-      {children}
-    </React.Fragment>
-  );
-});
+    return (
+      <React.Fragment>
+        {!children && <div id="editor-js"></div>}
+        {children}
+      </React.Fragment>
+    );
+  }
+);

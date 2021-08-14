@@ -10,21 +10,16 @@ import { getEvents } from "services/event";
 import StatsTitle from "components/ui/content/stats_title";
 import ItemAction from "components/ui/content/item_action";
 import StatsCard from "components/ui/content/stats_card";
+import { appointments } from "@db/appointments";
+import { designAppointments } from "components/ui/table/design/appointments";
 
 export default function Events() {
   const [activeModal, setActiveModal] = useState(false);
-  const toggleModal = () => setActiveModal(!activeModal);
   const [search, setSearch] = useState("");
 
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, error } = getEvents({ offset: pageIndex, search });
 
-  if (error || (data && data.error))
-    return (
-      <div className="bg-red-100 text-red-800 rounded-xl w-full flex items-center justify-center">
-        failed to load
-      </div>
-    );
+  const toggleModal = () => setActiveModal(!activeModal);
 
   return (
     <Layout
@@ -35,9 +30,9 @@ export default function Events() {
           <ItemAction title="Randevu silindi" type="danger" />
           <ItemAction title="Randevu oluşturuldu" type="success" />
           <StatsTitle className="mt-10" title="Genel İstatistikler" />
-          <StatsCard title="Toplam Etkinlik" stats={data?.count} />
-          <StatsCard title="Bugün Toplam Etkinlik" stats={data?.today} />
-          <StatsCard title="Devam Eden Etkinlik" stats={data?.continuing} />
+          <StatsCard title="Toplam Etkinlik" stats={3} />
+          <StatsCard title="Bugün Toplam Etkinlik" stats={5} />
+          <StatsCard title="Devam Eden Etkinlik" stats={8} />
         </Fragment>
       )}
     >
@@ -58,9 +53,9 @@ export default function Events() {
       <TableRows
         getPageIndex={(item) => setPageIndex(item + 1)}
         initialPage={pageIndex - 1}
-        patterns={designEvent}
-        data={data}
-        loading={!data && !error}
+        patterns={designAppointments}
+        count={appointments.length}
+        data={appointments}
       />
       <CustomModal
         setModal={toggleModal}

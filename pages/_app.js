@@ -15,7 +15,7 @@ import { SESSION_SECRET_KEY } from "helpers/sessionSecret";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const notFromLoginPage = router.pathname !== "/login";
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleVerify = (error) => {
     if (error && notFromLoginPage) {
@@ -24,19 +24,16 @@ function MyApp({ Component, pageProps }) {
   };
 
   useEffect(() => {
-    const userToken = localStorage.getItem("user@token");
-
-    if (!userToken && notFromLoginPage) {
-      router.push("/login");
-    }
-
-    if (userToken) {
-      JWT.verify(userToken, SESSION_SECRET_KEY, handleVerify);
-    }
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    // const userToken = localStorage.getItem("user@token");
+    // if (!userToken && notFromLoginPage) {
+    //   router.push("/login");
+    // }
+    // if (userToken) {
+    //   JWT.verify(userToken, SESSION_SECRET_KEY, handleVerify);
+    // }
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 1000);
   }, []);
 
   if (loading) {

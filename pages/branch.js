@@ -1,28 +1,18 @@
-import { services } from "@db/services";
+import { appointments } from "@db/appointments";
 import Layout from "components/core/layout";
 import Flexible from "components/ui/Flex";
 import AddBranch from "components/ui/forms/addBranch";
 import CustomModal from "components/ui/modal";
 import TableRows from "components/ui/table";
-import { designBranch } from "components/ui/table/design/branch";
+import { designAppointments } from "components/ui/table/design/appointments";
 import { useState } from "react";
-import { getBranchs } from "services/branch";
 
 export default function Branch() {
   const [activeModal, setActiveModal] = useState(false);
   const [pageIndex, setPageIndex] = useState(1);
   const [search, setSearch] = useState("");
 
-  const { data, error } = getBranchs({ offset: pageIndex, search });
-
   const toggleModal = () => setActiveModal(!activeModal);
-
-  if (error || (data && data.error))
-    return (
-      <div className="bg-red-100 text-red-800 rounded-xl w-full flex items-center justify-center">
-        failed to load
-      </div>
-    );
 
   return (
     <Layout>
@@ -43,9 +33,9 @@ export default function Branch() {
       <TableRows
         getPageIndex={(item) => setPageIndex(item + 1)}
         initialPage={pageIndex - 1}
-        patterns={designBranch}
-        data={data}
-        loading={!data && !error}
+        count={appointments.length}
+        patterns={designAppointments}
+        data={appointments}
       />
 
       <CustomModal
