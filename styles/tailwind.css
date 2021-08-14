@@ -1,0 +1,8 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.d {
+  background-color: #fce6c9;
+}
