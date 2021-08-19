@@ -17,7 +17,7 @@ app.prepare().then(() => {
       secret: SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: 100 * 3600000 },
+      cookie: { maxAge: 100 * 3600000, secure: false, httpOnly: false },
     })
   );
 
