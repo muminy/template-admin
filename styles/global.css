@@ -22,9 +22,7 @@ body {
 .layout-area {
   min-height: calc(100vh - 50px);
 }
-.next {
-  display: none;
-}
+
 .pagination > li:last-child {
   margin-right: 0px !important;
 }
@@ -148,4 +146,53 @@ body {
 
 .custom-input {
   @apply border-b-2 focus:border-gray-300 border-gray-200 placeholder-[#808080] font-semibold w-full py-4 focus:outline-none;
+}
+
+.pagination {
+  display: flex;
+  width: 100% !important;
+}
+
+.pagination li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  @apply mx-1 h-[24px] w-[24px] xl:h-[34px] xl:w-[34px] lg:h-[32px] lg:w-[32px] md:h-[28px] md:w-[28px];
+}
+
+.pagination li:not(.previous, .next, .break-me) a {
+  @apply bg-white border border-[#c3d9f5] rounded-md;
+}
+
+.pagination li.break-me a {
+  @apply !mx-0;
+}
+.pagination li.previous {
+  margin-right: auto;
+  @apply hidden xl:block lg:block  md:block;
+}
+.pagination li.previous a {
+  width: auto;
+  @apply h-[24px] xl:h-[34px] lg:h-[32px] md:h-[28px];
+  margin-right: 30px;
+}
+.pagination li.next {
+  margin-left: auto;
+  @apply hidden xl:block lg:block md:block;
+}
+.pagination li.next a {
+  width: auto;
+  @apply h-[24px] xl:h-[34px] lg:h-[32px] md:h-[28px];
+}
+
+.pagination li.next a,
+.pagination li.previous a {
+  @apply font-semibold text-gray-800;
+}
+.pagination li.disabled a {
+  @apply text-gray-300;
+}
+.pagination li.active a {
+  @apply border border-[#5881b4] bg-white rounded-md;
 }

@@ -9,3 +9,14 @@ export default function CancelIcon({ size = 24, color = "currentColor" }) {
     </svg>
   );
 }
+export function CancelLinesIcon({ size = 24, color = "currentColor" }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={size} height={size}>
+      <title>Close Circle</title>
+      <path
+        fill={color}
+        d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"
+      />
+    </svg>
+  );
+}

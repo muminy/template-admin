@@ -1,43 +1,20 @@
 import Layout from "components/core/layout";
 import Flexible from "components/ui/Flex";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import CustomModal from "components/ui/modal";
 import StatsTitle from "components/ui/content/stats_title";
 import ItemAction from "components/ui/content/item_action";
 import StatsCard from "components/ui/content/stats_card";
-import AddKeyword from "components/ui/forms/AddKeywords";
-import KeywordCard from "components/ui/KeywordCard";
+import SiteCard from "components/ui/SiteCard";
 import TableArea from "components/ui/TableArea";
-import Pagination from "components/ui/Pagination";
-import { connect } from "react-redux";
-import { handleGetOperations } from "services/operations";
-import NotFoundData from "components/ui/NotFoundData";
 
-function Keywords({ userToken }) {
-  const [loading, setLoading] = useState(true);
+export default function Links() {
   const [activeModal, setActiveModal] = useState(false);
   const [search, setSearch] = useState("");
-  const [operations, setOperations] = useState([]);
 
   const [pageIndex, setPageIndex] = useState(1);
 
   const toggleModal = () => setActiveModal(!activeModal);
-
-  const getOperations = async () => {
-    const operationLists = await handleGetOperations(userToken);
-
-    if (operationLists && typeof operationLists.message === "object") {
-      setOperations(operationLists.message);
-    }
-
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (userToken) {
-      getOperations();
-    }
-  }, [userToken]);
 
   return (
     <Layout
@@ -58,43 +35,28 @@ function Keywords({ userToken }) {
         <input
           defaultValue={search}
           onChange={(text) => setSearch(text.target.value)}
-          placeholder="Anahtar kelime ara"
+          placeholder="Link ara"
           className="focus:outline-none bg-transparent text-lg placeholder-[#657da2] w-full"
         />
-        <button
+        {/* <button
           onClick={toggleModal}
           className="whitespace-nowrap text-gray-700 bg-white border px-5 py-2 rounded-md text-[13px] font-semibold"
         >
-          Anahtar Kelime Ekle
-        </button>
+          Link Ekle
+        </button> */}
       </Flexible>
 
-      {loading ? (
-        <NotFoundData title="Data Yükleniyor" />
-      ) : operations.length === 0 ? (
-        <NotFoundData />
-      ) : (
-        <TableArea>
-          {operations.map((item) => (
-            <KeywordCard key={item.ID} {...item} />
-          ))}
-        </TableArea>
-      )}
+      <TableArea>
+        <SiteCard website="estetic.com.tr" />
+        <SiteCard website="epiyes.com.tr" />
+      </TableArea>
 
-      {!loading && operations.length > 0 && <Pagination />}
-
-      <CustomModal
+      {/* <CustomModal
         setModal={toggleModal}
         headerTitle="Blog Ekle"
         activeModal={activeModal}
-        moldalComponent={AddKeyword}
-      />
+        moldalComponent={AddEvent}
+      /> */}
     </Layout>
   );
 }
-
-const statements = (state) => {
-  return { userToken: state.userReducer.token };
-};
-
-export default connect(statements)(Keywords);

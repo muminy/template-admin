@@ -1,0 +1,2 @@
+const SESSION_SECRET = "AOIJDWADKLŞMA02PASJDIOAWD";
+module.exports = { SESSION_SECRET };

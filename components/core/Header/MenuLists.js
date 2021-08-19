@@ -44,26 +44,14 @@ export default function MenuLists() {
 
 const colorPalette = {
   "/": "hover:from-red-500 after:from-red-500",
-  "/appointments": "hover:from-blue-500 after:from-blue-500",
-  "/blogs": "hover:from-green-500 after:from-green-500",
-  "/contact": "hover:from-gray-500 after:from-gray-500",
-  "/branch": "hover:from-purple-500 after:from-purple-500",
-  "/event": "hover:from-blue-500 after:from-blue-500",
-  "/service-groups": "hover:from-green-500 after:from-green-500",
-  "/services": "hover:from-red-500 after:from-red-500",
-  "/staffs": "hover:from-blue-500 after:from-blue-500",
-  "/config": "hover:from-gray-500 after:from-gray-500",
+  "/links": "hover:from-blue-500 after:from-blue-500",
+  "/sites": "hover:from-green-500 after:from-green-500",
+  "/users": "hover:from-gray-500 after:from-gray-500",
 };
 
 const colorPaletteBorder = {
   "/": "border-red-500",
-  "/appointments": "border-blue-500",
-  "/blogs": "border-green-500",
-  "/contact": "border-gray-500",
-  "/branch": "border-purple-500",
-  "/event": "border-blue-500",
-  "/service-groups": "border-green-500",
-  "/services": "border-purple-500",
-  "/staffs": "border-red-500",
-  "/config": "border-gray-500",
+  "/links": "border-blue-500",
+  "/sites": "border-green-500",
+  "/users": "border-gray-500",
 };

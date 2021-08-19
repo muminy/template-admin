@@ -1,55 +1,76 @@
-import CustomInput from "components/ui/form-elements/input";
-import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { postFetcher } from "services/swr";
+import { useDispatch } from "react-redux";
+import { handleUserLogin, handleSetToken } from "services/auth";
+import { setToken } from "store/actions/user";
 
 export default function Login() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const { handleSubmit, register } = useForm();
 
-  const handleUserLogin = async (user_data) => {
-    // const handleLogin = await postFetcher("/user/login", user_data);
-    // if (handleLogin && !handleLogin.error) {
-    //   localStorage.setItem("user@token", handleLogin.userToken);
-    //   window.location.href = "/";
-    // } else {
-    //   setErrorMessage(handleLogin.error);
-    // }
+  const _userLogin = async (payload) => {
+    setLoading(true);
+    try {
+      const userLogin = await handleUserLogin(payload);
 
-    window.location.href = "/";
+      if (userLogin.code && userLogin.code === 200) {
+        handleSetToken(userLogin.token);
+        dispatch(setToken(userLogin.token));
+        setSuccess("Giriş başarılı");
+        setErrorMessage(null);
+      }
+    } catch (error) {
+      setErrorMessage("Email yada şifre hatalı");
+    }
+
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    }
+  }, [success]);
 
   return (
     <form
-      onSubmit={handleSubmit(handleUserLogin)}
-      className="h-screen w-full flex items-center justify-center "
+      onSubmit={handleSubmit(_userLogin)}
+      className="h-screen bg-[#f5f9fe] w-full flex items-center justify-center "
     >
-      <div className="w-screen overflow-y-auto xl:overflow-y-hidden lg:overflow-y-hidden xl:max-w-[420px] lg:max-w-[420px] md:max-w-[420px] h-screen flex items-center justify-center">
-        <div className="w-full">
-          {errorMessage && (
-            <div className="text-red-700 mb-4 font-semibold text-center">{errorMessage}</div>
-          )}
-          <CustomInput
-            name="username"
-            innerRef={register("username", { required: true })}
-            label="Kullanıcı Adı"
-            placeholder="blaa"
-            className="border rounded-md py-4 px-6 mb-4 w-full !border-b-4"
-          />
-          <CustomInput
-            name="password"
-            innerRef={register("password", { required: true })}
-            label="Şifre"
-            placeholder="blabla"
-            type="password"
-            className="border rounded-md py-4 px-6 w-full mb-6 !border-b-4"
-          />
-          <button
-            type="submit"
-            className="px-4 py-3 bg-white border !border-b-4 font-semibold rounded-md w-full hover:bg-gray-50"
-          >
-            Giriş yap
-          </button>
+      <div className="w-full overflow-y-auto xl:overflow-y-hidden lg:overflow-y-hidden xl:max-w-[360px] lg:max-w-[360px] md:max-w-[360px] h-screen flex items-center justify-center">
+        <div className="w-full px-10">
+          {errorMessage && <div className="text-red-500 mb-4 font-semibold">{errorMessage}</div>}
+          {success && <div className="text-green-500 mb-4 font-semibold">{success}</div>}
+          <div className="border border-[#d4e7ff] rounded-md overflow-hidden">
+            <input
+              placeholder="E-mail"
+              type="text"
+              {...register("email", { required: true })}
+              className="px-4 py-3 focus:outline-none w-full border-b border-[#d4e7ff]"
+            />
+            <input
+              placeholder="Şifre"
+              type="password"
+              {...register("password", { required: true })}
+              className="px-4 py-3 focus:outline-none w-full border-b border-[#d4e7ff]"
+            />
+            <button
+              type="submit"
+              className="px-4 py-3 focus:outline-none w-full bg-white hover:opacity-90"
+            >
+              {loading ? "Giriş yapılıyor" : "Giriş yap"}
+            </button>
+          </div>
         </div>
       </div>
     </form>
