@@ -13,7 +13,6 @@ export default function Links() {
   const [pageIndex, setPageIndex] = useState(1);
 
   const toggleModal = () => setActiveModal(!activeModal);
-  console.log(process.env.NODE_ENV);
   return (
     <Layout
       rightSidebar={() => (
