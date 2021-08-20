@@ -1,6 +1,7 @@
 const express = require("express");
 var session = require("express-session");
 const cors = require("cors");
+
 const { SESSION_SECRET } = require("./helpers/serverConstants");
 
 const next = require("next");
