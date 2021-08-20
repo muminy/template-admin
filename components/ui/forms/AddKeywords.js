@@ -9,22 +9,31 @@ import Flexible from "../Flex";
 import { CancelLinesIcon } from "components/icons/Cancel";
 import { handleCreateOperations } from "services/operations";
 import { connect } from "react-redux";
+import { handleGetWebsite } from "services/website";
 
 function AddKeyword({ editable, userToken }) {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [websites, setWebsites] = useState([""]);
+  const [webList, setWebList] = useState([]);
 
   const { handleSubmit, register } = useForm();
+
+  const handleGetWebsites = async () => {
+    const list = await handleGetWebsite();
+    setWebList(list.data);
+  };
 
   const handleStaff = async (formData) => {
     setLoading(true);
 
+    const _websites = [...websites, ...formData.websitelist];
+
     try {
       const payload = {
         ...formData,
-        blacklist: websites.filter((item) => item).join(","),
+        blacklist: _websites.filter((item) => item).join(","),
         max_browser: 1,
       };
 
@@ -60,6 +69,10 @@ function AddKeyword({ editable, userToken }) {
       return [...prevState];
     });
 
+  useEffect(() => {
+    handleGetWebsites();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(handleStaff)} className="px-10 pb-10">
       {loading && <LoadingComponent success={successMessage} editable={editable !== undefined} />}
@@ -89,6 +102,23 @@ function AddKeyword({ editable, userToken }) {
               </button>
             </Flexible>
           ))}
+          <GridCol cols="grid-cols-12" className="gap-5 py-4">
+            {webList.map((item, index) => (
+              <label
+                key={index}
+                htmlFor={item.website}
+                className="flex col-span-2 items-center mb-2"
+              >
+                <input
+                  id={item.website}
+                  {...register("websitelist")}
+                  type="checkbox"
+                  defaultValue={item.website}
+                />
+                <div className="font-semibold text-sm ml-2">{item.website}</div>
+              </label>
+            ))}
+          </GridCol>
           <button
             onClick={handleAddNewWebsite}
             type="button"

@@ -43,11 +43,7 @@ function Keywords({ userToken }) {
     <Layout
       rightSidebar={() => (
         <Fragment>
-          <StatsTitle title="Son işlemler" />
-          <ItemAction title="Randevu düzenlendi" type="warning" />
-          <ItemAction title="Randevu silindi" type="danger" />
-          <ItemAction title="Randevu oluşturuldu" type="success" />
-          <StatsTitle className="mt-10" title="Genel İstatistikler" />
+          <StatsTitle title="Genel İstatistikler" />
           <StatsCard title="Toplam Etkinlik" stats={3} />
           <StatsCard title="Bugün Toplam Etkinlik" stats={5} />
           <StatsCard title="Devam Eden Etkinlik" stats={8} />
@@ -63,7 +59,7 @@ function Keywords({ userToken }) {
         />
         <button
           onClick={toggleModal}
-          className="whitespace-nowrap text-gray-700 bg-white border px-5 py-2 rounded-md text-[13px] font-semibold"
+          className="whitespace-nowrap text-gray-700 bg-white border border-[#dbe9fa] px-5 py-2 rounded-md text-[13px] font-semibold"
         >
           Anahtar Kelime Ekle
         </button>

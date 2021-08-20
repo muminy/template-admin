@@ -5,6 +5,7 @@ const cors = require("cors");
 const { SESSION_SECRET } = require("./helpers/serverConstants");
 
 const next = require("next");
+const { addNewWebsite, deleteWebsite, getWebsites } = require("./lib/server.website");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -27,6 +28,21 @@ app.prepare().then(() => {
   server.use(express.static("public"));
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));
+
+  server.get("/api/websites", (request, response) => {
+    const websites = getWebsites();
+    response.json({ code: 200, data: websites });
+  });
+
+  server.post("/api/add-website", (request, response) => {
+    addNewWebsite(request.body.website);
+    response.json({ code: 200 });
+  });
+
+  server.post("/api/delete-website", (request, response) => {
+    deleteWebsite(request.body.index);
+    response.json({ code: 200 });
+  });
 
   server.post("/api/user/token", (request, response) => {
     request.session.token = request.body.token;

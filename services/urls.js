@@ -11,6 +11,10 @@ export const _operations = "/leo/operations";
 export const _setUserToken = "/user/token";
 export const _getUserToken = "/auth/token";
 
+export const _addWebsite = "/add-website";
+export const _deleteWebsite = "/delete-website";
+export const _getWebsites = "/websites";
+
 export const instance = axios.create({
   baseURL: baseAPI,
   headers: {
