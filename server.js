@@ -1,5 +1,6 @@
 const express = require("express");
 var session = require("express-session");
+const cors = require("cors");
 const { SESSION_SECRET } = require("./helpers/serverConstants");
 
 const next = require("next");
@@ -21,6 +22,7 @@ app.prepare().then(() => {
     })
   );
 
+  server.use(cors());
   server.use(express.static("public"));
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));
