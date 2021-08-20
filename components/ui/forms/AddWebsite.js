@@ -48,7 +48,9 @@ function AddWebsite({ editable }) {
             className="px-7 py-3 bg-gray-900 hover:bg-opacity-90 text-white rounded-md"
             type="submit"
           >
-            {editable
+            {successMessage
+              ? "Eklendi"
+              : editable
               ? loading
                 ? "Güncelleniyor"
                 : "Güncelle"

@@ -82,7 +82,7 @@ export default function Websites({ websites }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const websites = getWebsites();
 
   return {
